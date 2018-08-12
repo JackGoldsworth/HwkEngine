@@ -1,0 +1,22 @@
+plugins {
+    id 'java'
+}
+
+group 'net.dumbcode.hwkengine'
+version '0.0.1'
+
+sourceCompatibility = 1.8
+project.ext.lwjglVersion = "2.9.1"
+
+repositories {
+    mavenCentral()
+    maven { url "https://mvnrepository.com/artifact/org.lwjgl.lwjgl/lwjgl" }
+    maven { url "https://clojars.org/repo/" }
+    maven { url = "http://dvs1.progwml6.com/files/maven" }
+}
+
+dependencies {
+    compile group: 'org.lwjgl.lwjgl', name: 'lwjgl', version: "${lwjglVersion}"
+    compile group: 'slick-util', name: 'slick-util', version: '1.0.0'
+    compile 'org.projectlombok:lombok:1.18.0'
+}
