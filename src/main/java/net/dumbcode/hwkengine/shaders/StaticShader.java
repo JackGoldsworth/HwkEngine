@@ -16,5 +16,6 @@ public class StaticShader extends Shader
     public void bindAttributes()
     {
         super.bindAttribute(0, "positions");
+        super.bindAttribute(1, "textureCoords");
     }
 }
