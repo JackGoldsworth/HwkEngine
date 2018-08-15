@@ -1,5 +1,7 @@
 package net.dumbcode.hwkengine.shaders;
 
+import net.dumbcode.hwkengine.entities.Camera;
+import net.dumbcode.hwkengine.utils.MathUtils;
 import org.lwjgl.util.vector.Matrix4f;
 
 public class StaticShader extends Shader
@@ -10,6 +12,8 @@ public class StaticShader extends Shader
     private static final String FRAGMENT = "src/main/java/net/dumbcode/hwkengine/shaders/glsl/fragmentShader.glsl";
 
     private int transformMatrix;
+    private int projectionMatrix;
+    private int viewMatrix;
 
     public StaticShader()
     {
@@ -27,10 +31,23 @@ public class StaticShader extends Shader
     public void getAllUniformLocations()
     {
         transformMatrix = super.getUniformLocation("transformation_matrix");
+        projectionMatrix = super.getUniformLocation("projection_matrix");
+        viewMatrix = super.getUniformLocation("view_matrix");
     }
 
     public void loadMatrix(Matrix4f matrix)
     {
         super.loadMatrix(transformMatrix, matrix);
+    }
+
+    public void loadProjectionMatrix(Matrix4f matrix)
+    {
+        super.loadMatrix(projectionMatrix, matrix);
+    }
+
+    public void loadViewMatrix(Camera camera)
+    {
+        Matrix4f viewMatrix = MathUtils.createViewMatrix(camera);
+        super.loadMatrix(this.viewMatrix, viewMatrix);
     }
 }
