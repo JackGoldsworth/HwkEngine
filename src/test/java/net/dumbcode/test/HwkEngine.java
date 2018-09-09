@@ -39,6 +39,8 @@ public class HwkEngine
         staticShader = new StaticShader();
         renderer = new ModelRenderer(staticShader);
         texture = new ModelTexture(modelLoader.loadTexture("stall"));
+        texture.setDamper(10f);
+        texture.setReflectivity(1f);
         texturedModel = new TexturedModel(model, texture);
         entity = new Entity(texturedModel, new Vector3f(0, 0, -50), 0, 0, 0, 1);
         light = new Light(new Vector3f(0, 0, -20), new Vector3f(1, 1, 1));

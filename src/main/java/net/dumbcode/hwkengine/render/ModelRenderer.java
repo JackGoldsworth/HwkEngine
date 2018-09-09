@@ -4,6 +4,7 @@ import net.dumbcode.hwkengine.entities.Entity;
 import net.dumbcode.hwkengine.model.RawModel;
 import net.dumbcode.hwkengine.model.TexturedModel;
 import net.dumbcode.hwkengine.shaders.StaticShader;
+import net.dumbcode.hwkengine.textures.ModelTexture;
 import net.dumbcode.hwkengine.utils.MathUtils;
 import org.lwjgl.opengl.*;
 import org.lwjgl.util.vector.Matrix4f;
@@ -34,15 +35,22 @@ public class ModelRenderer
     {
         TexturedModel model = entity.getModel();
         RawModel raw = model.getModel();
+        ModelTexture texture = model.getTexture();
+
         GL30.glBindVertexArray(raw.getId());
         GL20.glEnableVertexAttribArray(0);
         GL20.glEnableVertexAttribArray(1);
         GL20.glEnableVertexAttribArray(2);
+
         Matrix4f transformation = MathUtils.createTransformationMatrix(entity.getPosition(), entity.getRotX(), entity.getRotY(), entity.getRotZ(), entity.getScale());
         shader.loadMatrix(transformation);
+
+        shader.loadShineValues(texture.getDamper(), texture.getReflectivity());
+
         GL13.glActiveTexture(GL13.GL_TEXTURE0);
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, model.getTexture().getId());
         GL11.glDrawElements(GL11.GL_TRIANGLES, raw.getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
+
         GL20.glDisableVertexAttribArray(0);
         GL20.glDisableVertexAttribArray(1);
         GL20.glDisableVertexAttribArray(2);
